@@ -1,0 +1,58 @@
+<%- include('header') %>
+    <div class="container">
+        <h1>Password Category List</h1>
+        <div class="row">
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Password Category Name</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if(records.length>0){ 
+                records.forEach(function(row){ %>
+                <tr>
+                  <td><%= row.password_category %></td>
+                  <td><a class="btn btn-primary btn-xs" href="/view-all-category/edit/<%= row._id %>"><i class="fa fa-edit" title="Edit Record"></i></a>
+                    <a class="btn btn-danger btn-xs" href="/view-all-category/delete/<%= row._id %>" onclick="return confirm ('Are You Sure?')"><i class="fa fa-trash" title="Delete Record"></i></a>
+                  </td>
+                </tr>
+                <% }) } else { %>
+                  <tr>
+                    <td>No Password Category Found!</td>
+                  </tr>
+                <% } %>
+            </tbody>
+          </table>
+          <% if (pages > 0) { %>
+            <ul class="pagination text-center">
+                <% if (current == 1) { %>
+                    <li class="disabled"><a>First</a></li>
+                <% } else { %>
+                    <li><a href="/view-all-category/1">First</a></li>
+                <% } %>
+                <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                <% if (i !== 1) { %>
+                    <li class="disabled"><a>...</a></li>
+                <% } %>
+                <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                    <% if (i == current) { %>
+                        <li class="active"><a><%= i %></a></li>
+                    <% } else { %>
+                        <li><a href="/view-all-category/<%= i %>"><%= i %></a></li>
+                    <% } %>
+                    <% if (i == Number(current) + 4 && i < pages) { %>
+                        <li class="disabled"><a>...</a></li>
+                    <% } %>
+                <% } %>
+                <% if (current == pages) { %>
+                    <li class="disabled"><a>Last</a></li>
+                <% } else { %>
+                    <li><a href="/view-all-category/<%= pages %>">Last</a></li>
+                <% } %>
+            </ul>
+        <% } %>
+        </div>
+      </div>
+      <%- include('footer') %>
